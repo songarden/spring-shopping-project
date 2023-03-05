@@ -1,9 +1,14 @@
 package org.garden.springwork;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import java.util.Optional;
 import java.util.UUID;
 
-public class OrderContext {
+@Configuration
+public class AppConfiguration {
+    @Bean
     public OrderRepository orderRepository(){
         return new OrderRepository() {
             @Override
@@ -12,6 +17,7 @@ public class OrderContext {
             }
         };
     }
+    @Bean
     public VoucherRepository voucherRepository(){
         return new VoucherRepository() {
             @Override
@@ -20,10 +26,12 @@ public class OrderContext {
             }
         };
     }
-    public VoucherService voucherService(){
-        return new VoucherService(voucherRepository());
+    @Bean
+    public VoucherService voucherService(VoucherRepository voucherRepository){
+        return new VoucherService(voucherRepository);
     }
-    public OrderService orderService(){
-        return new OrderService(voucherService(),orderRepository());
+    @Bean
+    public OrderService orderService(VoucherService voucherService, OrderRepository orderRepository){
+        return new OrderService(voucherService,orderRepository);
     }
 }
