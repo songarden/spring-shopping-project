@@ -1,4 +1,4 @@
-package org.garden.springwork;
+package org.garden.springwork.order;
 
 import java.util.UUID;
 
